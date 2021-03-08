@@ -4,7 +4,8 @@
 .header{
     text-align: center;
 }
-.header nav{
+.header nav ul{
+    display: flex;
     background-color: black;
     line-height: 40px;
     font-size: 20px;

@@ -12,12 +12,20 @@ import Inventory from './components/Inventory/Inventory';
 import NotFound from './components/NotFound/NotFound';
 import ProductDetail from './components/ProductDetail/ProductDetail';
 import './components/Header/Header.css'
+import LogIn from './components/LogIn/LogIn';
+import Shipment from './components/Shipment/Shipment';
+import { createContext, useState } from 'react';
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
+
+export const userContext = createContext();
 
 function App() {
+  const [loggedInUser, setLoggedInUser] = useState({})
   return (
-    <div>
-      <Header></Header>
+    <userContext.Provider value={[loggedInUser, setLoggedInUser]}>
+      <h1>email: {loggedInUser.email}</h1>
       <Router>
+        <Header></Header>
         <div className="header">
           <nav>
           <ul>
@@ -30,6 +38,7 @@ function App() {
             <li>
               <Link to="/inventory">Manage Inventory</Link>
             </li>
+            <button onClick={() => setLoggedInUser({})}>Sign Up</button>
           </ul>
           </nav>
         </div>
@@ -43,6 +52,12 @@ function App() {
           <Route path="/inventory">
             <Inventory></Inventory>
           </Route>
+          <Route path="/login">
+            <LogIn></LogIn>
+          </Route>
+          <PrivateRoute path="/shipment">
+            <Shipment></Shipment>
+          </PrivateRoute>
           <Route exact path="/">
             <Shop></Shop>
           </Route>
@@ -54,7 +69,7 @@ function App() {
           </Route>
         </Switch>
       </Router>
-    </div>
+    </userContext.Provider>
   );
 }
 

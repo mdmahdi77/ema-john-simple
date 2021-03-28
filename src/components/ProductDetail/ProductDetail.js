@@ -7,7 +7,7 @@ const ProductDetail = () => {
     const [product, setProduct] = useState({})
 
     useEffect(() => {
-        fetch('http://localhost:5000/product/'+ productKey)
+        fetch('https://mysterious-garden-10561.herokuapp.com/product/'+ productKey)
         .then(res => res.json())
         .then(data => setProduct(data))
     },[productKey])
@@ -16,7 +16,7 @@ const ProductDetail = () => {
     return (
         <div>
             <h1>{productKey}</h1>
-            <h2>Your product details</h2>
+            <h2>Your product details rigth now</h2>
             <Product showAddToCart={false} product={product}></Product>
         </div>
     );

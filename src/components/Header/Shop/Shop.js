@@ -10,12 +10,13 @@ const Shop = () => {
     // const [products, setProducts] = useState(first10);
     const [products, setProducts] = useState([]);
     const [cart, setCart] = useState([]);
+    const [search, setSearch] = useState('');
 
     useEffect(() => {
-        fetch('https://mysterious-garden-10561.herokuapp.com/products')
+        fetch('https://mysterious-garden-10561.herokuapp.com/products?search='+search)
         .then(res => res.json())
         .then(data => setProducts(data))
-    } ,[])
+    } ,[search])
 
     useEffect(() => {
         const savedCart = getDatabaseCart()
@@ -30,6 +31,11 @@ const Shop = () => {
         .then(res => res.json())
         .then(data => setCart(data))
     },[])
+
+    const handleSearch = event =>{
+        setSearch(event.target.value);
+        console.log(event.target.value)
+    }
 
     const handleAddProduct = (product) =>{
         const toBedded = product.key
@@ -57,6 +63,7 @@ const Shop = () => {
     return (
         <div className="twin-container">
             <div className="product-container">
+                <input type="text" onBlur={handleSearch} className="product-search" placeholder="Search..."/>
                     {
                         products.map(pd => <Product key={pd.key} showAddToCart={true} handleProduct={handleAddProduct} product={pd}></Product>)
                     }
